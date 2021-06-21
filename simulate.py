@@ -5,6 +5,7 @@ import numpy as np
 from scipy.linalg import expm
 import random
 from os.path import join
+from os import makedirs
 
 
 # $1 is config file
@@ -101,12 +102,13 @@ for sc in scafs:
 		seq2 = rc(seq2)
 	flipped_scaf.append((seq1,seq2))
 
+makedirs(join(sys.argv[2],"genomes"))
 for i in [0,1]:
 	fst = ""
 	for n,sc in enumerate(flipped_scaf):
 		fst += ">scaf_"+str(i)+"\n"
 		fst += sc[i]+"\n"
-	with open(join(sys.argv[2],"genome_%s.fasta" % str(i)), "w") as f:
+	with open(join(sys.argv[2],"genomes/genome_%s.fasta" % str(i)), "w") as f:
 		f.write(fst)
 
 sim_param = dict()
