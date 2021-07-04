@@ -89,17 +89,20 @@ if "genome" in j:
 		idx_occurances.append([])
 
 	for name, seq, qual in rfq.readfq(f):
-		l = len(seq)
+		#l = len(seq)
 		#print(seq)
-		slen += l
+
 		for ind_i,i in enumerate(["A","C", "G","T"]):
 			idx_occurances[ind_i].extend(findOccurrences(n,seq,i))
 		scafs.append([(i,i) for i in seq])
 		n += 1
-
-	w = 2*len(idx_occurances[0])/slen
-	pi = np.array([len(i)/slen for i in idx_occurances])
-	#print(pi)
+	no_bases = np.array([len(i) for i in idx_occurances])
+	#print(no_bases)
+	slen = sum(no_bases)
+	#print(slen)
+	pi = no_bases/slen
+	w = 2*pi[0]
+	#print(pi,w)
 
 	length = slen
 	Jc, Hd, F, Pm, R, Flen = params(w,pac,pag,pat,length,pi)
@@ -114,6 +117,9 @@ if "genome" in j:
 	for ind_i,i in enumerate(["A","C", "G","T"]):
 		start=0
 		for ind_j,j in enumerate(["A","C", "G","T"]):
+			if ind_i == ind_j:
+				start += int(Flen[ind_i,ind_j])
+				continue
 			for k in range(int(Flen[ind_i,ind_j])):
 				if start + k >= len(idx_occurances[ind_i]):
 					continue
@@ -122,6 +128,9 @@ if "genome" in j:
 				scafs[idx_occurances[ind_i][start+k][0]][idx_occurances[ind_i][start+k][1]] = (i,j)
 				
 			start += int(Flen[ind_i,ind_j])
+			#print(i,j, "done")
+		
+		idx_occurances[ind_i] = []
 	#print(scafs)
 else:
 	w=j["omega"]
@@ -162,8 +171,7 @@ for sc in scafs:
 	flip1 = random.randint(0,1)
 	flip2 = random.randint(0,1)
 	if flip1:
-		if gen == 0:
-			seq1 = rc(seq1)
+		seq1 = rc(seq1)
 	if flip2:
 		seq2 = rc(seq2)
 	flipped_scaf.append((seq1,seq2))
