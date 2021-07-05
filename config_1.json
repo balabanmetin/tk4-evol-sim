@@ -7,5 +7,6 @@
     "t":0.1,
     "scaffolds":20,
     "seed":12345,
-    "genome":"base_genomes/genome_0.fasta"
+    "genome":"base_genomes/genome_0.fasta",
+    "keepunknownchar":false
 }

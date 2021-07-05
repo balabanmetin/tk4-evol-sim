@@ -91,7 +91,14 @@ if "genome" in j:
 	for name, seq, qual in rfq.readfq(f):
 		#l = len(seq)
 		#print(seq)
-		seq = seq.upper()#.replace('N','')
+		seq = seq.upper()
+		if j["keepunknownchar"] == False:
+			chars = set(seq)
+			for i in ["A","C","G","T"]:
+				chars.remove(i)
+			for i in chars:
+				seq = seq.replace(i,"")
+			
 		for ind_i,i in enumerate(["A","C", "G","T"]):
 			idx_occurances[ind_i].extend(findOccurrences(n,seq,i))
 		scafs.append([(i,i) for i in seq])
