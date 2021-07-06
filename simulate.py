@@ -108,7 +108,7 @@ if "genome" in j:
 	slen = sum(no_bases)
 	#print(slen)
 	pi = no_bases/slen
-	w = 2*pi[0]
+	w = pi[0] + pi[3]
 	#print(pi,w)
 
 	length = slen
