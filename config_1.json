@@ -2,9 +2,11 @@
     "alpha": 0.25,
     "delta": 0.25,
     "gamma": 4,
-    "length": 100000,
+    "length": 10000,
     "omega": 0.58,
     "t":0.1,
     "scaffolds":20,
-    "seed":12345
+    "seed":12345,
+    "genome":"base_genomes/genome_0.fasta",
+    "keepunknownchar":false
 }
