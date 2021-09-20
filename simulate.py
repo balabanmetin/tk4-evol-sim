@@ -199,7 +199,11 @@ sim_param["hamming"]=Hd
 sim_param["F"]=F.tolist()
 sim_param["Pm"]=Pm.tolist()
 sim_param["R"]=R.tolist()
-
-
+tk4_param = {"R":(F[0][1]+F[1][0]+F[2][3]+F[3][2]),
+	"P":(F[0][2]+F[2][0]+F[1][3]+F[3][1]),
+	"Q1":(F[0][3]+F[3][0]),
+	"Q2":(F[1][2]+F[2][1]),
+	"w":w}
+sim_param["tk4_param"]=tk4_param
 with open(join(sys.argv[2],"sim_out.json"), "w") as f:
 	f.write(json.dumps(sim_param, sort_keys=True, indent=4))
